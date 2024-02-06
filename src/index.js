@@ -7,9 +7,7 @@ async function fetchPokemon() {
         console.log("*****Task 1a: *****")
         data.forEach(pokemon => console.log(pokemon))
 
-        const title1 = document.createElement("h1")
-        title1.innerText = "Task 1b: "
-        body.appendChild(title1)
+        renderTitle("Task 1b:")
         renderHTML(data)
     }
     catch(err) {
@@ -24,10 +22,23 @@ async function fetchDogs() {
         console.log("*****Task 2a: *****")
         data.forEach(dog => console.log(dog.name))
 
-        const title1 = document.createElement("h1")
-        title1.innerText = "Task 2b: "
-        body.appendChild(title1)
+        renderTitle("Task 2b:")
         renderHTML(data)
+    }
+    catch(err) {
+        console.error("Error: ", err)
+    }
+}
+
+async function fetchBooks() {
+    try {
+        const response = await fetch("https://majazocom.github.io/Data/books.json")
+        const data = await response.json()
+        // Task 3a:
+        const filteredData = data.filter((book) => book.pages <= 500)
+        
+        renderTitle("Task 3b")
+        renderHTML(filteredData)
     }
     catch(err) {
         console.error("Error: ", err)
@@ -38,11 +49,22 @@ function renderHTML(data) {
     data.forEach(item => {
         const ul = document.createElement("ul")
         const li = document.createElement("li")
-        li.innerText = item.name
+        if(item.name) {
+            li.innerText = item.name
+        } else if(item.title) {
+            li.innerText = item.title
+        }
         ul.appendChild(li)
         body.appendChild(ul)
     })
 }
 
+function renderTitle(text) {
+    const title = document.createElement("h1")
+    title.innerText = text
+    body.appendChild(title)
+}
+
 fetchPokemon()
 fetchDogs()
+fetchBooks()
