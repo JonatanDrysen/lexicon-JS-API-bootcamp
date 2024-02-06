@@ -17,6 +17,23 @@ async function fetchPokemon() {
     }
 }
 
+async function fetchDogs() {
+    try {
+        const response = await fetch("https://majazocom.github.io/Data/dogs.json")
+        const data = await response.json()
+        console.log("*****Task 2a: *****")
+        data.forEach(dog => console.log(dog.name))
+
+        const title1 = document.createElement("h1")
+        title1.innerText = "Task 2b: "
+        body.appendChild(title1)
+        renderHTML(data)
+    }
+    catch(err) {
+        console.error("Error: ", err)
+    }
+}
+
 function renderHTML(data) {
     data.forEach(item => {
         const ul = document.createElement("ul")
@@ -28,3 +45,4 @@ function renderHTML(data) {
 }
 
 fetchPokemon()
+fetchDogs()
