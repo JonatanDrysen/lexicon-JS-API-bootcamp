@@ -32,9 +32,9 @@ async function fetchDogs() {
 
 async function fetchBooks() {
     try {
+        // Task 3a:
         const response = await fetch("https://majazocom.github.io/Data/books.json")
         const data = await response.json()
-        // Task 3a:
         const filteredData = data.filter((book) => book.pages <= 500)
         
         renderTitle("Task 3b")
@@ -43,6 +43,19 @@ async function fetchBooks() {
     catch(err) {
         console.error("Error: ", err)
     }
+}
+
+async function fetchVisitors() {
+    // Task 4a:
+    const response = await fetch("https://majazocom.github.io/Data/attendees.json")
+    const data = await response.json()
+    const attending = data.filter((visitor) => visitor.attending === true)
+    const attendingWithAllergy = data.filter((visitor) => visitor.attending === true && visitor.allergies.length > 0)
+
+    renderTitle("Task 4b: ")
+    renderHTML(attending)
+    renderTitle("Task 4c: ")
+    renderHTML(attendingWithAllergy)
 }
 
 function renderHTML(data) {
@@ -68,3 +81,4 @@ function renderTitle(text) {
 fetchPokemon()
 fetchDogs()
 fetchBooks()
+fetchVisitors()
